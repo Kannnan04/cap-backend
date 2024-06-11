@@ -1,4 +1,5 @@
-import Ticket from "../Models/userSchema.js";
+import { Ticket } from "../Models/userSchema.js"
+
 
 // put call
  export const fetchquery = async(req,res)=>{
