@@ -2,10 +2,8 @@ import express from "express";
 import cors from 'cors'
 import dotenv from 'dotenv';
 import connectDB from "./Database/connectDB.js";
-import routers from './Router/routers.js';
 import LoginRoute from './Router/LoginRoutes.js'
 import RegisterRoute from './Router/RegisterRoutes.js'
-import verifyToken from "./Middleware/Middleware.js";
 import ForgotPassword from './Router/ForgotPasswordRoute.js'
 
 
@@ -17,17 +15,18 @@ app.use(express.json())
 
 const port = process.env.PORT
 
-app.use("/auth", LoginRoute);
-app.use("/auth", RegisterRoute);
-app.use("/auth", ForgotPassword);
+app.use("/api", LoginRoute);
+app.use("/api", RegisterRoute);
+app.use("/api", ForgotPassword);
 
 connectDB()
-app.get('/',(req,res)=>{
+
+app.get('/', (req, res) => {
     res.send('backend is running')
 })
 
-app.use('/api',routers)
+// app.use('/api',routers)
 
-app.listen(port,()=>{
-    console.log("App is running",port)
+app.listen(port, () => {
+    console.log("App is running", port)
 })

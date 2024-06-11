@@ -1,5 +1,5 @@
-import { User } from "../Models/userSchema";
-import bcrypt from "bcrypt"
+import { User } from "../Models/userSchema.js";
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
 
 const Login = async (req, res) => {
@@ -19,7 +19,7 @@ const Login = async (req, res) => {
 
         const token = jwt.sign(
             { email: user.email, _id: user._id },
-            process.env.SECRET
+            process.env.token
         );
 
         res.json({
@@ -33,4 +33,4 @@ const Login = async (req, res) => {
     }
 };
 
-module.exports = Login;
+export default Login;
