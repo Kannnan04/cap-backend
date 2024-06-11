@@ -11,23 +11,10 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '../Models/userSchema.js';
+import LoginController from "../Controller/LoginController.js"
 
 const router = express.Router();
 
-router.post('/login', async (req, res) => {
-    // const { username, password } = req.body;
-
-    // // Check if user exists
-    // const user = await User.findOne({ username });
-    // if (!user) return res.status(400).send('Username or password is wrong');
-
-    // // Check password
-    // const validPass = await bcrypt.compare(password, user.password);
-    // if (!validPass) return res.status(400).send('Invalid password');
-
-    // // Create and assign a token
-    // const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    // // res.header('auth-token', token).send(token);
-});
+router.post('/login',LoginController)
 
 export default router;

@@ -31,33 +31,29 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
-// import { User } from '../Models/userSchema.js';
+import RegisterController from "../Controller/RegisterController.js"
+import { User } from '../Models/userSchema.js';
 
 const router = express.Router();
 
-router.post('/register', async (req, res) => {
-//   const { username, password } = req.body;
+router.post('/register', RegisterController) 
 
-//   // Check if user exists
-//   const userExists = await User.findOne({ username });
-//   if (userExists) return res.status(400).send('Username already exists');
+function verifyToken(req, res, next) {
+  const token = req.header("Authorization");
 
-//   // Hash password
-//   const salt = await bcrypt.genSalt(10);
-//   const hashedPassword = await bcrypt.hash(password, salt);
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Access denied. No token provided." });
+  }
 
-//   // Create new user
-//   const user = new User({
-//     username,
-//     password: hashedPassword,
-//   });
-
-//   try {
-//     await user.save();
-//     res.status(201).send('User registered');
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
- });
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
+    req.token = decoded;
+    next();
+  } catch (error) {
+    res.status(403).json({ message: "Invalid token." });
+  }
+}
 
 export default router;
